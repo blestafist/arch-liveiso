@@ -74,8 +74,59 @@ The overlay limit includes projects and browser/editor caches, not just configs.
 
 ## Still to configure before building
 
-- Zed settings and local C/C++ language-server setup.
 - ISO build and boot tests (UEFI/BIOS, networking, graphics, sound, offline use).
 
 The current profile has not yet been built or boot-tested. RAM-only operation
 and safe USB removal must be verified on the resulting image before relying on them.
+
+## Zed
+
+Settings are based on the source PC's `~/.config/zed/settings.json`, with these
+live-session adjustments:
+
+- Keep Vim mode off, cursor animation, font sizes (UI 18 / editor 16), left
+  project panel, and autosave after one second.
+- Use Fish and JetBrains Mono Nerd Font in the embedded terminal.
+- Use `/usr/bin/clangd` from the `clang` package for C/C++; no language-server
+  download is needed for these languages. Background indexing uses two workers.
+- Disable AI/edit predictions, telemetry and application auto-update. No AI
+  authentication, account state, editor history or host projects are copied.
+- Ask for project trust instead of trusting every worktree automatically.
+- Bundle these unmodified, data-only extensions from the source PC under
+  `airootfs/home/live/.local/share/zed/extensions/installed/`:
+
+| Extension | Version | Upstream |
+| --- | --- | --- |
+| Claude Code Inspired Dark | 1.0.0 | https://github.com/ericbuess/claude-code-inspired-dark |
+| Charmed Icons | 0.10.0 | https://github.com/jmesrje/zed-charmed-icons |
+| Monokai Night Theme | 0.2.2 | https://github.com/farbodvand/zed-monokai-night |
+
+Their automatic updates and default HTML extension auto-installation are
+disabled. Other languages/extensions may still need installation or downloads.
+The host's Zed configuration is not changed.
+
+When first opening your own C/C++ project, approve its trust prompt to enable
+the language server. For CMake projects, generate a compilation database with:
+
+```sh
+cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+cmake --build build -j2
+```
+
+## First ISO build
+
+Run from the profile directory on the Arch build host:
+
+```sh
+sudo mkarchiso -v -w work/build-01 -o out .
+```
+
+This installs packages into the build tree, not the host root filesystem.
+Packages require an internet connection during the build; allow tens of GiB
+of disk space for the working tree and package cache. The ISO is written to
+`out/`. This command does not write to or format a USB drive.
+
+If the profile changes after a build attempt, use a fresh work subdirectory
+(for example `work/build-02`), because mkarchiso caches completed steps.
+The resulting ISO is unsigned: normal UEFI boot requires Secure Boot to be
+disabled with the computer owner's permission, unless signing is set up separately.

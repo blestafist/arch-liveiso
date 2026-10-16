@@ -1,0 +1,23 @@
+id = "monokai-night"
+name = "Monokai Night Theme"
+version = "0.2.2"
+schema_version = 1
+description = "🌃 A dark theme with two accents and vibrant syntax highlighting for Zed."
+repository = "https://github.com/farbodvand/zed-monokai-night"
+authors = ["farbodvand <pharbod95@gmail.com>"]
+themes = ["themes/Monokai-Night.json"]
+icon_themes = []
+languages = []
+capabilities = []
+
+[lib]
+
+[grammars]
+
+[language_servers]
+
+[context_servers]
+
+[slash_commands]
+
+[indexed_docs_providers]

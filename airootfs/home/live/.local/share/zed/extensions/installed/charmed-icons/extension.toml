@@ -1,0 +1,23 @@
+id = "charmed-icons"
+name = "Charmed Icons"
+version = "0.10.0"
+schema_version = 1
+description = "A charming icon theme for Zed"
+repository = "https://github.com/jmesrje/zed-charmed-icons"
+authors = ["littensy", "jmesrje"]
+themes = []
+icon_themes = ["icon_themes/light-theme.json", "icon_themes/base-theme.json", "icon_themes/warm-theme.json", "icon_themes/soft-theme.json"]
+languages = []
+capabilities = []
+
+[lib]
+
+[grammars]
+
+[language_servers]
+
+[context_servers]
+
+[slash_commands]
+
+[indexed_docs_providers]
