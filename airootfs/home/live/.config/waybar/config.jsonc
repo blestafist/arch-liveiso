@@ -1,0 +1,23 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": ["niri/workspaces", "niri/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["cpu", "memory", "network", "pulseaudio"],
+    "niri/window": {"max-length": 45},
+    "clock": {"format": "{:%d.%m  %H:%M}"},
+    "cpu": {"format": "CPU {usage}%", "interval": 5},
+    "memory": {"format": "RAM {used:0.1f}G", "interval": 5},
+    "network": {
+        "format-wifi": "Wi-Fi {essid}",
+        "format-ethernet": "LAN",
+        "format-disconnected": "Offline",
+        "on-click": "foot nmtui"
+    },
+    "pulseaudio": {
+        "format": "VOL {volume}%",
+        "format-muted": "Muted",
+        "on-click": "pavucontrol"
+    }
+}

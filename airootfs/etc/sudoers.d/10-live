@@ -1,0 +1,2 @@
+# Disposable local live session. No password authentication or remote login.
+live ALL=(ALL:ALL) NOPASSWD: ALL
