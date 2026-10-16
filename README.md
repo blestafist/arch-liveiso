@@ -17,6 +17,14 @@ Target: x86_64, Intel integrated graphics, 16 GiB RAM, USB 3.
 - Home directory configs are embedded under `airootfs/home/live/`.
   mkarchiso sets their ownership from `airootfs/etc/passwd` during the build.
 - No persistence is configured. Session changes are lost on shutdown.
+- Boot entries copy the compressed root image to RAM (`copytoram=y`). The
+  writable overlay is tmpfs, limited to 50% of RAM (not reserved in advance).
+- GPT partition automount and hibernation-resume generators are masked. Disk
+  swap is disabled via the kernel command line and a masked `swap.target`.
+  `fstab` and `crypttab` contain no device entries. This does not prevent manual
+  access to internal disks using administrator privileges.
+- SquashFS and initramfs use Zstandard for faster decompression. Network/PXE
+  boot and screen-reader boot entries are not included in this profile.
 
 This is an intentionally open local live session, not a secure multi-user system.
 Do not put tokens, private SSH keys or Wi-Fi passwords into the profile.
@@ -44,9 +52,28 @@ Do not put tokens, private SSH keys or Wi-Fi passwords into the profile.
 | Mod+Shift+/ | Shortcut help |
 | Mod+Shift+E | Exit Niri (autologin starts a new session) |
 
+## RAM-only boot verification
+
+After booting the ISO, run:
+
+```sh
+sudo live-ram-check
+free -h
+```
+
+The read-only check verifies that the SquashFS backing file is under the RAM
+mount, the overlay is on tmpfs, the Archiso boot-media mounts are gone, and no
+swap is active. It then lists devices so you can inspect any other mounts.
+Do not pull the USB out during boot/copying or while any partition on it is
+still mounted. Test USB removal only after these checks pass.
+
+The compressed image, writable changes and applications all share physical
+RAM. tmpfs limits do not reserve memory or prevent out-of-memory conditions.
+There is deliberately no disk-swap fallback: avoid large builds/downloads.
+The overlay limit includes projects and browser/editor caches, not just configs.
+
 ## Still to configure before building
 
-- RAM-copy boot parameters (`copytoram=y`) and cleanup of installer boot entries.
 - Zed settings and local C/C++ language-server setup.
 - ISO build and boot tests (UEFI/BIOS, networking, graphics, sound, offline use).
 

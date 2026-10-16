@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Read-only checks: never mount, unmount or change swap on the user's behalf.
+set -euo pipefail
+
+fail() {
+    printf 'FAIL: %s\n' "$*" >&2
+    exit 1
+}
+
+[[ $EUID -eq 0 ]] || fail 'Run sudo live-ram-check to inspect loop backing files.'
+[[ " $(</proc/cmdline) " == *' copytoram=y '* ]] || fail 'copytoram=y is missing.'
+[[ $(findmnt -n -M / -o FSTYPE) == overlay ]] || fail 'Root is not overlayfs.'
+for path in /run/archiso/copytoram /run/archiso/cowspace; do
+    [[ $(findmnt -n -M "$path" -o FSTYPE) == tmpfs ]] || fail "$path is not tmpfs."
+done
+
+loopdev=$(findmnt -n -M /run/archiso/airootfs -o SOURCE) || fail 'Live root image is not mounted.'
+backing=$(losetup --noheadings --output BACK-FILE "$loopdev") || fail 'Cannot inspect root image backing file.'
+[[ $backing == /run/archiso/copytoram/* ]] || fail "Root image is not backed by RAM: $backing"
+
+for path in /run/archiso/bootmnt /run/archiso/img_dev; do
+    if findmnt -n -M "$path" >/dev/null; then
+        fail "Boot media is still mounted at $path."
+    fi
+done
+[[ -z $(swapon --show --noheadings) ]] || fail 'Swap is active.'
+
+printf 'OK: live root and writable overlay are RAM-backed; no swap is active.\n'
+printf 'Review other device mounts below before removing USB media:\n'
+lsblk -o NAME,TRAN,SIZE,FSTYPE,MOUNTPOINTS

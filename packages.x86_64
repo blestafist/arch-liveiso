@@ -7,8 +7,8 @@ amd-ucode
 sof-firmware
 mkinitcpio
 mkinitcpio-archiso
-mkinitcpio-nfs-utils
 squashfs-tools
+pv
 syslinux
 grub
 edk2-shell
