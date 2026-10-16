@@ -1,0 +1,5 @@
+# Archiso build artifacts
+/work/
+/out/
+/*.iso
+/*.iso.sig
