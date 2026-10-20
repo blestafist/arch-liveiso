@@ -35,22 +35,41 @@ Do not put tokens, private SSH keys or Wi-Fi passwords into the profile.
 
 | Shortcut | Action |
 | --- | --- |
-| Mod+Enter | Foot |
-| Mod+D | Application launcher |
+| Mod+T / Mod+Enter | Foot |
+| Mod+R | Fuzzel application launcher |
 | Mod+E | Zed (`zeditor` on Arch) |
 | Mod+B | Firefox |
 | Mod+N | Network setup (`nmtui`) |
-| Alt+Shift | English/Russian layout |
+| Alt+Shift / Super+Space | English/Russian layout (Caps Lock acts as Ctrl) |
 | Mod+arrows | Focus windows/columns |
-| Mod+Shift+arrows | Move windows/columns |
+| Mod+Ctrl+arrows | Move windows/columns |
+| Mod+Shift+arrows | Focus monitor |
 | Mod+PageUp/PageDown | Change workspace |
-| Mod+R | Cycle column widths |
+| Mod+D | Cycle column widths |
 | Mod+F / Mod+Shift+F | Maximize column / fullscreen |
 | Mod+V | Toggle floating |
 | Mod+Q | Close window |
 | Print | Screenshot |
 | Mod+Shift+/ | Shortcut help |
 | Mod+Shift+E | Exit Niri (autologin starts a new session) |
+
+## Desktop appearance
+
+- Niri is adapted from the source PC: 8px gaps, 4px amber borders, 6px rounded
+  corners, animation slowdown 1.65, and the familiar T/R/D and H/J/K/L bindings.
+  Host monitor names, resolution/rotation settings, QuickShell and Kitty
+  dependencies are not copied. Outputs are detected automatically; Waybar and
+  Foot remain the lightweight replacements. EN/RU layouts are retained.
+- Fuzzel uses an opaque charcoal background, readable cream text, amber
+  selection/border, rounded corners and JetBrains Mono. Config:
+  `airootfs/home/live/.config/fuzzel/fuzzel.ini`.
+- `awww` replaces swaybg. The source PC's current `frieren-snow.png` is bundled
+  under `/usr/share/backgrounds/code-live/`. Niri starts the user service
+  `live-wallpaper.service`; its startup helper waits for an output before
+  applying the image to all current outputs, cropped to fill, without animation.
+  The daemon is stopped with the graphical session. No host wallpaper cache
+  is copied. Display hotplug and appearance still need testing in the ISO.
+- The host's desktop settings and currently displayed wallpaper are untouched.
 
 ## RAM-only boot verification
 

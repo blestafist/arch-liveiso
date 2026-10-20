@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Wait for the daemon AND its first output, not a fixed startup delay.
+set -euo pipefail
+
+wallpaper=/usr/share/backgrounds/code-live/frieren-snow.png
+for ((attempt = 0; attempt < 100; attempt++)); do
+    if outputs=$(awww query 2>/dev/null) && [[ -n $outputs ]]; then
+        exec awww img --resize crop --transition-type none "$wallpaper"
+    fi
+    sleep 0.1
+done
+printf 'awww did not become ready within 10 seconds.\n' >&2
+exit 1

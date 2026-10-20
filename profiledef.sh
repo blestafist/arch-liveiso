@@ -23,4 +23,5 @@ file_permissions=(
   ["/root/.gnupg"]="0:0:700"
   ["/usr/local/bin/choose-mirror"]="0:0:755"
   ["/usr/local/bin/live-ram-check"]="0:0:755"
+  ["/usr/local/bin/live-wallpaper-apply"]="0:0:755"
 )

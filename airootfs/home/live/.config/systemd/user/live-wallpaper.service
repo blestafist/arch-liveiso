@@ -1,0 +1,11 @@
+[Unit]
+Description=Code Live wallpaper (awww)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/awww-daemon --no-cache
+ExecStartPost=/usr/local/bin/live-wallpaper-apply
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=20
