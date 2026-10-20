@@ -7,6 +7,9 @@ Target: x86_64, Intel integrated graphics, 16 GiB RAM, USB 3.
 
 - `live` (UID/GID 1000) automatically logs in on tty1 and starts `niri-session`.
 - Fish is the user's login shell; Foot inherits it.
+- Fish includes the source PC's `runc` function: select a `.cpp` file (or pass
+  its name), compile with `clang++ -std=c++17 -Wall -Wextra -O3`, then run
+  `output.bin`. The executable is created in the current directory.
 - Both root and live have locked passwords. Automatic local login works via
   agetty; `sudo` does not require a password. Set a temporary password with
   `sudo passwd live` before using a password-based screen locker.
