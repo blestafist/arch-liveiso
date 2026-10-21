@@ -1,0 +1,64 @@
+{
+  "policies": {
+    "ExtensionSettings": {
+      "uBlock0@raymondhill.net": {
+        "installation_mode": "normal_installed",
+        "install_url": "file:///usr/share/code-live/firefox/extensions/uBlock0%40raymondhill.net.xpi"
+      },
+      "{8cd92831-f20b-4fe7-a6cc-274b18dfe319}": {
+        "installation_mode": "normal_installed",
+        "install_url": "file:///usr/share/code-live/firefox/extensions/%7B8cd92831-f20b-4fe7-a6cc-274b18dfe319%7D.xpi"
+      }
+    },
+    "Preferences": {
+      "browser.contentblocking.category": {
+        "Value": "custom",
+        "Status": "default"
+      },
+      "browser.newtabpage.activity-stream.showSponsoredCheckboxes": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.toolbars.bookmarks.visibility": {
+        "Value": "never",
+        "Status": "default"
+      },
+      "browser.translations.neverTranslateLanguages": {
+        "Value": "ru",
+        "Status": "default"
+      },
+      "browser.urlbar.suggest.trending": {
+        "Value": false,
+        "Status": "default"
+      },
+      "browser.theme.toolbar-theme": {
+        "Value": 0,
+        "Status": "default"
+      },
+      "extensions.activeThemeID": {
+        "Value": "{8cd92831-f20b-4fe7-a6cc-274b18dfe319}",
+        "Status": "default"
+      },
+      "privacy.globalprivacycontrol.enabled": {
+        "Value": true,
+        "Status": "default"
+      },
+      "privacy.clearOnShutdown_v2.formdata": {
+        "Value": true,
+        "Status": "default"
+      },
+      "sidebar.main.tools": {
+        "Value": "aichat,syncedtabs,history,bookmarks,opentabs",
+        "Status": "default"
+      },
+      "sidebar.visibility": {
+        "Value": "hide-on-close",
+        "Status": "default"
+      },
+      "signon.rememberSignons": {
+        "Value": false,
+        "Status": "default"
+      }
+    }
+  }
+}

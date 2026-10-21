@@ -1,78 +1,34 @@
-// Based on this PC's Zed settings; adapted for a disposable offline session.
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "terminal": {
-    "bell": "off",
-    "shell": {
-      "program": "/usr/bin/fish"
-    },
-    "font_family": "JetBrainsMono Nerd Font"
-  },
-  "vim_mode": false,
-  "cursor_animation": {
-    "enabled": true
-  },
-  "show_edit_predictions": false,
-  "disable_ai": true,
-  "languages": {
-    "C": {
-      "language_servers": ["clangd"],
-      "show_edit_predictions": false
-    },
-    "C++": {
-      "language_servers": ["clangd"],
-      "show_edit_predictions": false
-    },
-    "Rust": {
-      "show_edit_predictions": false,
-      "inlay_hints": {
-        "enabled": true
-      },
-      "completions": {
-        "words_min_length": 2
-      }
-    }
-  },
-  "lsp": {
-    "clangd": {
-      "binary": {
-        "path": "/usr/bin/clangd",
-        "arguments": ["--background-index", "-j=2"]
-      }
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 800
     }
   },
   "project_panel": {
     "dock": "left"
   },
-  "autosave": {
-    "after_delay": {
-      "milliseconds": 1000
-    }
+  "session": {
+    "trust_all_worktrees": true
   },
-  "ui_font_weight": 500.0,
-  "ui_font_size": 18.0,
-  "buffer_font_size": 16.0,
-  "buffer_font_family": "JetBrainsMono Nerd Font",
   "telemetry": {
     "diagnostics": false,
     "metrics": false,
     "anthropic_retention": false
   },
-  "session": {
-    "trust_all_worktrees": false
-  },
-  "auto_update": false,
-  "auto_install_extensions": {
-    "html": false
-  },
-  "auto_update_extensions": {
-    "claude-code-inspired-dark": false,
-    "charmed-icons": false,
-    "monokai-night": false
-  },
-  "icon_theme": "Base Charmed Icons",
+  "icon_theme": "Zed (Default)",
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
   "theme": {
     "mode": "dark",
-    "light": "Monokai Night Soft",
-    "dark": "Claude Code Inspired Dark"
-  }
+    "light": "Gruvbox Light",
+    "dark": "Gruvbox Dark",
+  },
 }

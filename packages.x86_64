@@ -31,10 +31,10 @@ foot
 fish
 fuzzel
 adwaita-icon-theme
-waybar
 mako
 awww
 swaylock
+brightnessctl
 wl-clipboard
 grim
 slurp
@@ -84,6 +84,7 @@ wget
 rsync
 less
 nano
+neovim
 man-db
 man-pages
 bash-completion

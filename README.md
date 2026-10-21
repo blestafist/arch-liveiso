@@ -38,17 +38,14 @@ Do not put tokens, private SSH keys or Wi-Fi passwords into the profile.
 
 | Shortcut | Action |
 | --- | --- |
-| Mod+T / Mod+Enter | Foot |
+| Mod+T | Foot |
 | Mod+R | Fuzzel application launcher |
-| Mod+E | Zed (`zeditor` on Arch) |
-| Mod+B | Firefox |
-| Mod+N | Network setup (`nmtui`) |
-| Alt+Shift / Super+Space | English/Russian layout (Caps Lock acts as Ctrl) |
+| Mod+Space / Mod+Shift+Space | Polish/Russian layout, next/previous (Caps Lock acts as Ctrl) |
 | Mod+arrows | Focus windows/columns |
 | Mod+Ctrl+arrows | Move windows/columns |
 | Mod+Shift+arrows | Focus monitor |
 | Mod+PageUp/PageDown | Change workspace |
-| Mod+D | Cycle column widths |
+| Mod+X | Cycle column widths |
 | Mod+F / Mod+Shift+F | Maximize column / fullscreen |
 | Mod+V | Toggle floating |
 | Mod+Q | Close window |
@@ -58,13 +55,14 @@ Do not put tokens, private SSH keys or Wi-Fi passwords into the profile.
 
 ## Desktop appearance
 
-- Niri is adapted from the source PC: 8px gaps, 4px amber borders, 6px rounded
-  corners, animation slowdown 1.65, and the familiar T/R/D and H/J/K/L bindings.
-  Host monitor names, resolution/rotation settings, QuickShell and Kitty
-  dependencies are not copied. Outputs are detected automatically; Waybar and
-  Foot remain the lightweight replacements. EN/RU layouts are retained.
-- Fuzzel uses an opaque charcoal background, readable cream text, amber
-  selection/border, rounded corners and JetBrains Mono. Config:
+- Niri uses the current local config: 6px gaps, 3px amber/red borders,
+  default animations, PL/RU layouts and the source PC's keybindings.
+  The example output block remains disabled, so outputs are detected automatically.
+  Waybar is removed, including its package, config and startup command.
+  Only startup is adapted: wallpaper uses the live service, and PipeWire /
+  WirePlumber use their packaged systemd user units rather than duplicate processes.
+- Fuzzel is copied unchanged from the local PC: translucent Catppuccin Mocha,
+  rounded corners and JetBrains Mono. Config:
   `airootfs/home/live/.config/fuzzel/fuzzel.ini`.
 - `awww` replaces swaybg. The source PC's current `frieren-snow.png` is bundled
   under `/usr/share/backgrounds/code-live/`. Niri starts the user service
@@ -73,6 +71,12 @@ Do not put tokens, private SSH keys or Wi-Fi passwords into the profile.
   The daemon is stopped with the graphical session. No host wallpaper cache
   is copied. Display hotplug and appearance still need testing in the ISO.
 - The host's desktop settings and currently displayed wallpaper are untouched.
+- Foot, Fastfetch (`terminal-open`), btop, pavucontrol and Zed settings are copied
+  unchanged from the local PC. Fish retains all local aliases and the Fastfetch
+  startup, plus the existing `runc` function. Its tty1 startup is handled by the
+  existing system-wide live-session hook instead of the host's D-Bus command.
+  Neovim and brightnessctl are included for the local aliases and keybindings.
+  Fish history, browser profiles, credentials and application caches are not copied.
 
 ## RAM-only boot verification
 
@@ -101,20 +105,39 @@ The overlay limit includes projects and browser/editor caches, not just configs.
 The current profile has not yet been built or boot-tested. RAM-only operation
 and safe USB removal must be verified on the resulting image before relying on them.
 
+## Firefox
+
+Firefox starts with a clean profile. An allowlist of local preferences is applied
+as editable defaults through `airootfs/etc/firefox/policies/policies.json`:
+hidden bookmarks toolbar, local sidebar settings, no trending search suggestions,
+no password-save prompts, Global Privacy Control, the local content-blocking
+category and no Russian translation prompts.
+
+uBlock Origin 1.75.0 and the local Saffox Dark theme 1.2 are bundled as unmodified
+XPIs under `/usr/share/code-live/firefox/extensions/`. Policies install them from
+local files on first launch, without needing an internet download; they can be
+disabled in the add-ons manager. The active-theme default points to Saffox Dark.
+Normal extension and filter updates may still use the network.
+
+No entire Firefox profile is copied: passwords, cookies, history, bookmarks,
+open tabs, Sync/account state, search databases, site permissions, extension
+storage and custom uBlock rules are excluded. Dark Reader and Proton Pass are
+not bundled. This is not a byte-for-byte copy of the local Firefox profile.
+First-run installation, theme activation and policy behavior still need testing
+in the built ISO (`about:policies`, `about:addons`). Add-on sources and checksums
+are documented in `airootfs/usr/share/code-live/firefox/README.md`.
+
 ## Zed
 
-Settings are based on the source PC's `~/.config/zed/settings.json`, with these
-live-session adjustments:
+Settings are copied unchanged from the source PC's `~/.config/zed/settings.json`:
+Gruvbox Dark, default icons, UI size 16, editor size 15, left project panel,
+autosave after 800 ms and disabled telemetry. As on the source PC,
+`trust_all_worktrees` is enabled: only open projects you trust.
+The previous live-specific AI, update and language-server overrides are no longer
+applied; language servers or extensions may require downloads.
+No authentication, account state, editor history or host projects are copied.
 
-- Keep Vim mode off, cursor animation, font sizes (UI 18 / editor 16), left
-  project panel, and autosave after one second.
-- Use Fish and JetBrains Mono Nerd Font in the embedded terminal.
-- Use `/usr/bin/clangd` from the `clang` package for C/C++; no language-server
-  download is needed for these languages. Background indexing uses two workers.
-- Disable AI/edit predictions, telemetry and application auto-update. No AI
-  authentication, account state, editor history or host projects are copied.
-- Ask for project trust instead of trusting every worktree automatically.
-- Bundle these unmodified, data-only extensions from the source PC under
+These previously bundled, data-only extensions remain available under
   `airootfs/home/live/.local/share/zed/extensions/installed/`:
 
 | Extension | Version | Upstream |
@@ -123,12 +146,9 @@ live-session adjustments:
 | Charmed Icons | 0.10.0 | https://github.com/jmesrje/zed-charmed-icons |
 | Monokai Night Theme | 0.2.2 | https://github.com/farbodvand/zed-monokai-night |
 
-Their automatic updates and default HTML extension auto-installation are
-disabled. Other languages/extensions may still need installation or downloads.
 The host's Zed configuration is not changed.
 
-When first opening your own C/C++ project, approve its trust prompt to enable
-the language server. For CMake projects, generate a compilation database with:
+For CMake projects, generate a compilation database with:
 
 ```sh
 cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
