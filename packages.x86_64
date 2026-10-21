@@ -31,6 +31,7 @@ foot
 fish
 fuzzel
 adwaita-icon-theme
+adwaita-fonts
 mako
 awww
 swaylock
@@ -44,6 +45,10 @@ xdg-desktop-portal-gtk
 xdg-desktop-portal-gnome
 polkit
 gnome-keyring
+
+# File manager (mount drives manually; no thunar-volman automount)
+thunar
+gvfs
 
 # Fonts: Cyrillic, programming ligatures, icons and emoji
 noto-fonts

@@ -39,6 +39,7 @@ Do not put tokens, private SSH keys or Wi-Fi passwords into the profile.
 | Shortcut | Action |
 | --- | --- |
 | Mod+T | Foot |
+| Mod+E | Thunar file manager |
 | Mod+R | Fuzzel application launcher |
 | Mod+Space / Mod+Shift+Space | Polish/Russian layout, next/previous (Caps Lock acts as Ctrl) |
 | Mod+arrows | Focus windows/columns |
@@ -55,6 +56,13 @@ Do not put tokens, private SSH keys or Wi-Fi passwords into the profile.
 
 ## Desktop appearance
 
+- Thunar is the default handler for folders, with GVfs for file operations and
+  manual mounting. No thunar-volman or removable-drive automount is configured.
+- GTK 3/4 settings match the source PC: Catppuccin Mocha Rosewater
+  (`catppuccin-mocha-rosewater-standard+default`), Adwaita icons/cursor and
+  Adwaita Sans 11. The local theme is bundled for offline use; no global
+  `GTK_THEME` override is forced on applications. Libadwaita applications may
+  keep their own appearance. Thunar appearance still needs ISO boot testing.
 - Niri uses the current local config: 6px gaps, 3px amber/red borders,
   default animations, PL/RU layouts and the source PC's keybindings.
   The example output block remains disabled, so outputs are detected automatically.
@@ -156,6 +164,12 @@ cmake --build build -j2
 ```
 
 ## First ISO build
+
+Use an Arch Linux build host (an Arch VM is recommended when the host is Artix),
+with the `archiso` package installed. The source PC runs Artix and currently has
+no `mkarchiso`; do not mix Arch packages into the Artix host to build this profile.
+The profile's `pacman.conf` includes `/etc/pacman.d/mirrorlist` from the build
+environment, which must contain Arch mirrors, not Artix mirrors.
 
 Run from the profile directory on the Arch build host:
 
